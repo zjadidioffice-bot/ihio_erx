@@ -9,12 +9,12 @@ async function openCpartySession({
     const token = await fetchToken();
 
 
-    console.log("Terminal ID exists:", Boolean(process.env.TERMINAL_ID));
-console.log("Token received:", Boolean(token));
-console.log("Client IP:", clientIPAddress);
-console.log("Client Agent:", clientAgentInfo);
-console.log("Username received:", Boolean(cpartyUsername));
-console.log("Password received:", Boolean(cpartyPassword));
+    // console.log("Terminal ID exists:", Boolean(process.env.TERMINAL_ID));
+    // console.log("Token received:", Boolean(token));
+    // console.log("Client IP:", clientIPAddress);
+    // console.log("Client Agent:", clientAgentInfo);
+    // console.log("Username received:", Boolean(cpartyUsername));
+    // console.log("Password received:", Boolean(cpartyPassword));
 
     const response = await fetch(
         "http://test.ihio.gov.ir/erx-core/v3/service/auth/session/cparty/open",
@@ -37,7 +37,7 @@ console.log("Password received:", Boolean(cpartyPassword));
     if (!response.ok || data.resCode !== 1 || !data.info?.sessionId) {
         throw new Error(data.resMessage || "Opening doctor session failed");
     }
-return data.info
+    return data.info
 }
 
-module.exports=openCpartySession;
+module.exports = openCpartySession;

@@ -1,6 +1,6 @@
 const openCpartySession = require("../services/ihio/cparty-session.service");
 const fetchToken = require("../services/ihio/token.service")
-
+const openCitizenSession=require("../services/ihio/citizen-session.service")
 async function getToken(req, res) {
     try {
         const token = await fetchToken()
@@ -41,8 +41,34 @@ async function openCparty(req, res) {
     }
 }
 
+async function openCitizen(req,res) {
+     try {
+        const { cpartySessionId, nationalNumber } = req.body;
+        console.log("Client IP:", req.ip);
+        console.log("Client Agent:", req.get("user-agent"));
+        const session = await openCitizenSession({
+            cpartySessionId,
+            nationalNumber,
+            clientIPAddress: "127.0.0.1",
+            clientAgentInfo: req.get("user-agent") || "Unknown"
+        });
+        res.status(200).json({
+            success: true,
+            message: "citizen session opened successfully",
+            info: session
+        });
+    } catch (error) {
+        res.status(502).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 module.exports = {
     getToken
     ,
     openCparty
+    ,
+    openCitizen
 }
