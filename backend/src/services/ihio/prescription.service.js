@@ -7,6 +7,7 @@ async function fetchPrescription({
     clientIPAddress,
     clientAgentInfo
 }) {
+    console.log("Prescription service reached");
     const token = await fetchToken();
     console.log("Request data:", {
         cpartySessionIdExists: Boolean(cpartySessionId),
